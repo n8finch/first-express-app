@@ -1,9 +1,12 @@
-h1= title
+h1 Names
 
-p.
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut sem at leo rhoncus semper molestie nec ante. Quisque tincidunt eros vitae sollicitudin iaculis. Donec bibendum mi est, at viverra nulla iaculis suscipit. Curabitur nec risus laoreet, suscipitaugue non, suscipit metus. Maecenas
-	pellentesque convallis est, at accumsan
-dui pretium sit amet. Quisque ultricies sapien a laoreet commodo. Curabitur eu tellus ut est porttitor varius ut eu tellus. Integer non eros non lorelaoreet tincidunt. Nam ac aliquet eros. Etiam ornare nisi erat, quis mollis elit pretium convallis. Cras gravida ante in eleifend efficitur. Vestibulum a rutrum arcu. Vivamus sodales ornare purus sed luctus.
+ul
+	for name in names
+			li = name
 
+hr
 
-input(type='password')
+h1 Add Name
+form(method='POST')
+	input(type='text')
+	button Submit

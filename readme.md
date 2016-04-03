@@ -4,6 +4,11 @@
 
 `npm install express`
 
+Start with: 
+```var express = require('express'),
+	app		= express();```
+
+
 Run the server from `server.js`: `node server.js`
 
 `npm install install jade --save-dev`
@@ -17,6 +22,9 @@ app.get('/', function(req, res) {
 	});
 });
 ```
+
+Where `req` is the request and `res` is the response.
+
 Can use mustache, handlebars, jade, etc.
 
 
@@ -25,3 +33,19 @@ Can use mustache, handlebars, jade, etc.
 Run the server from `server.js` on nodemon to produce the jade file in html: `nodemon server.js`
 
 Don't want to use jade? You can use ejs via `npm install ejs`
+
+
+
+###Creating Routes###
+"Verb Methods": CRUD: POST, GET, PUT DELTE
+
+Express does not parse some requests, so we need to install middleware.
+
+`npm install body-parser`
+
+and then in the `var express`:
+
+`app.use(bodyParser.urlencoded());` at t
+
+makes sure that all the bodies of the forms are parsed before we get to the routes.
+
