@@ -58,21 +58,68 @@ var express = require('express'),
 
 // app.use(express.static('./public'));
 
-app.param('name', function( req, res, next, name) {
-		req.name = name[0].toUpperCase() + name.substring(1);
-		next();
+// app.param('name', function( req, res, next, name) {
+// 		req.name = name[0].toUpperCase() + name.substring(1);
+// 		next();
 
-		//Get a user name, maybe with app.alL();
-		Users.findOne({username: name}, function(err, user){
-				req.user = user;
-				next();
-		});
+// 		//Get a user name, maybe with app.alL();
+// 		Users.findOne({username: name}, function(err, user){
+// 				req.user = user;
+// 				next();
+// 		});
+// });
+
+
+// app.get('/name/:name', function(req, res) {
+// 	res.send('Your name is ' + req.name);
+// });
+
+
+//app.route can have methods chained to it
+// app.route('/')
+// 	.all( function() {
+// 		//...
+// 	})
+// 	.get( function() {
+// 		//...
+// 	})
+// 	.post( function() {
+// 		//...
+// 	});
+
+
+// Router Object
+
+var router = express.Router(); //can pass an object in here.
+
+var APIv1 = express.Router(),
+		APIv2 = express.Router();
+
+APIv1.get('/names', function(req, res) {
+	res.send('first from API 1');
+});
+
+APIv2.get('/names', function(req, res) {
+	res.send('first from API 2');
 });
 
 
-app.get('/name/:name', function(req, res) {
-	res.send('Your name is ' + req.name);
+router.use(function(req,res,next) {
+	console.log('router specific middleware');
+	next();
 });
+
+router.get('/', function(req,res) {
+	res.send('router home route');
+});
+
+router.route('/test').get(function(req,res) {
+	res.send('router test route');
+});
+
+// to actually use this router, you have to use it and pass it.
+
+app.use('/api', router);
 
 app.listen(3000, function() {
 	console.log('listing on port 3000');

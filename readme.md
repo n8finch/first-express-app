@@ -5,8 +5,11 @@
 `npm install express`
 
 Start with: 
-```var express = require('express'),
-	app		= express();```
+
+```
+var express = require('express'),
+	app		= express();
+```
 
 
 Run the server from `server.js`: `node server.js`
@@ -128,3 +131,128 @@ app.param('name', function( req, res, next, name) {
 ```
 
 Always put this above the what you need.
+
+
+###Shortcut syntax###
+
+Instead of having everything separate:
+app.all('/')
+app.get('/')
+app.post('/')
+
+`app.route('/')` will return a route object with all methods available:
+app.all()
+app.get()
+app.post()
+app.put()
+app.delete 
+and these can be chained.
+
+so you can just have:
+
+```
+app.route('/')
+	.all( function() {
+		//...
+	})
+	.get( function() {
+		//...
+	})
+	.post( function() {
+		//...
+	});
+```
+
+
+###Router Object###
+
+Is a mini application that runs inside the master express app.
+
+```
+var router = express.Router(); //can pass an object in here.
+
+router.use(function(req,res,next) {
+	console.log('router specific middleware');
+	next();
+});
+
+router.get('/', function(req,res) {
+	res.send('router home route');
+});
+
+router.route('/test').get(function(req,res) {
+	res.send('router test route');
+});
+
+// to actually use this router, you have to use it and pass it.
+
+app.use('/', router);
+```
+
+To create different APIs
+
+```
+var APIv1 = express.Router(),
+		APIv2 = express.Router();
+
+APIv1.get('/names', function(req, res) {
+	res.send('first from API 1');
+});
+
+APIv2.get('/names', function(req, res) {
+	res.send('first from API 2');
+});
+```
+
+###API Docs###
+See: http://expressjs.com/en/4x/api.html
+
+
+###Request Methods###
+See: http://expressjs.com/en/4x/api.html#req
+
+
+###Response Methods###
+
+See: http://expressjs.com/en/4x/api.html#res
+
+```
+res.status(200)
+res.set(header, value);
+res.get(header);
+
+res.cookie(name, value);
+res.clearCookie(name);
+
+res.redirect(status, path);
+res.send(status, text);
+res.json(status, object);
+res.jsonp(status, object); //callback({})
+res.download(file);
+
+res.render(file, props, function( err, html) {
+	//do something with the html
+	res.send(200, html);
+});
+```
+
+
+###response.format() Method###
+
+using different response formats depending on what users need:
+
+```
+app.get('/', function (req, res) {
+	res.format({
+		'text/plain' : function() {
+				res.send('text response');
+		},
+		'text/html' : function() {
+				res.render('index.jade');
+		},
+		'application/json' : function() {
+				res.json({ topic: 'Express' });
+		}
+	});
+});
+```
