@@ -97,4 +97,34 @@ https://github.com/senchalabs/connect
 and
 https://github.com/senchalabs/connect/wiki
 
+request flow from top to bottom through layers. 
 
+Custom middleware: you use `app.use()`, and you pass it a function that takes the three parameters `(req, res, next)`
+
+Route functions: GET, PUT, POST, DELETE (CRUD).
+
+Built-in middleware (most of this is removed now). 
+
+One piece is `app.use(express.static('./public'));`
+
+you do have to use `next();` in the custom middleware.
+
+
+###App Parameters###
+
+```
+app.get('/name/:name', function(req, res) {
+	res.send('Your name is ' + req.params.name);
+});
+```
+
+use `app.param()` like this:
+
+```
+app.param('name', function( req, res, next, name) {
+		req.name = name[0].toUpperCase + name.substring(1);
+		next();
+});
+```
+
+Always put this above the what you need.
